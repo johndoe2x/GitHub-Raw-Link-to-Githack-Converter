@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub to Githack Link Converter</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      margin-top: 30px;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .output {
+      margin-top: 20px;
+      word-break: break-word;
+      background: #e9f7ef;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>GitHub Raw Link to Githack Converter</h2>
+    <input type="text" id="inputUrl" placeholder="Paste raw.githubusercontent.com URL here">
+    <button onclick="convertUrl()">Convert</button>
+    <div id="output" class="output"></div>
+  </div>
+
+  <div class="container">
+    <h2>GitHub Repo to Githack Link Generator</h2>
+    <input type="text" id="repoUrl" placeholder="Paste github.com Repository URL here">
+    <button onclick="convertRepoUrl()">Generate</button>
+    <div id="rawOutput" class="output"></div>
+  </div>
+
+  <script>
+    function convertUrl() {
+      let input = document.getElementById('inputUrl').value.trim();
+      if (!input) {
+        alert("Please enter a URL");
+        return;
+      }
+      if (!input.includes("raw.githubusercontent.com")) {
+        alert("The URL must be a raw.githubusercontent.com link");
+        return;
+      }
+      let converted = input.replace("raw.githubusercontent.com", "raw.githack.com");
+      document.getElementById('output').innerHTML = `Converted Githack Link:<br><a href="${converted}" target="_blank">${converted}</a>`;
+    }
+
+    function convertRepoUrl() {
+      let repoInput = document.getElementById('repoUrl').value.trim();
+      if (!repoInput) {
+        alert("Please enter a repository URL");
+        return;
+      }
+      if (!repoInput.includes("github.com")) {
+        alert("The URL must be a github.com repository link");
+        return;
+      }
+      let parts = repoInput.replace("https://github.com/", "").split("/");
+      if (parts.length < 2) {
+        alert("Invalid repository URL");
+        return;
+      }
+      let rawLink = `https://raw.githubusercontent.com/${parts[0]}/${parts[1]}/refs/heads/main/index.html`;
+      let githackLink = rawLink.replace("raw.githubusercontent.com", "raw.githack.com");
+      document.getElementById('rawOutput').innerHTML = `Converted Githack Link:<br><a href="${githackLink}" target="_blank">${githackLink}</a>`;
+    }
+  </script>
+
+</body>
+</html>
